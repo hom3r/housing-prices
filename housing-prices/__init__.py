@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+from locale import normalize
 import os
 
 from http import HTTPStatus
+import pickle
+from sklearn.preprocessing import normalize
+import pandas as pd
+import numpy as np
 from flask import Flask, Blueprint, request, jsonify, render_template
 from flasgger import Swagger, swag_from
-from jsonschema import validate
-import jsonschema
+from jsonschema import validate, exceptions
 from werkzeug import exceptions
 
-
+features = ['longitude', 'latitude', 'housing_median_age', 'total_rooms', 'total_bedrooms', 'population', 'households', 'median_income', 'ocean_proximity']
 schema = {
     'type' : 'object',
     'properties' : {
@@ -27,7 +31,7 @@ schema = {
         'enum': ['NEAR BAY', '<1H OCEAN', 'INLAND', 'NEAR OCEAN', 'ISLAND'] 
         }
     },
-    'required': ['longitude', 'latitude', 'housing_median_age','population','households','total_rooms','total_bedrooms','median_income','ocean_proximity']
+    'required': features
 }
 
 swagger_config = {
@@ -35,7 +39,7 @@ swagger_config = {
     'description': 'This API predicts the housing prices based on the property parameters.',
     'uiversion': 3,
     'openapi': '3.0.3',
-    'version': '0.1.0',
+    'version': '1.0.0',
     'persistAuthorization': True,
     'components': {
         'schemas': {
@@ -66,6 +70,12 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+
+    # TODO use relative path to open the file
+    infile = open('/Users/dejv/Dev/python/housing-prices/housing-prices/model.pkl','rb')
+    model = pickle.load(infile)
+    infile.close()
 
     # error handling
     @app.errorhandler(404)    
@@ -126,23 +136,43 @@ def create_app(test_config=None):
         Predicts house price based on its parameters.
         """
         try:
+            # get the house parameters and validate them
             house = request.json
             validate(instance=house, schema=schema)
+
+            # load model and encoder
+            regr = model[0]
+            encoder = model[1]
+
+            # create DataFrame
+            df = pd.DataFrame(house, index=[0])
+
+            # set the columns in the correct order
+            df = df.reindex(columns=features)
+
+            # one-hot encode the ocean proximity
+            prox = df['ocean_proximity'].values.reshape(-1, 1)
+            ocean_proximity_train = encoder.transform(prox).toarray()
+
+            # replace the categorical value with the encoded array
+            df = df.drop('ocean_proximity', axis=1)
+            X = np.concatenate((df, ocean_proximity_train),axis=1)
+
+            # normalize data
+            X = normalize(X)
+            Y = regr.predict(X)
+            
+            price = Y[0]
+            return jsonify({'predicted_house_price': price})
         except exceptions.BadRequest as ex:
             # bad request due to invalid JSON format
             return error('Bad request. The JSON in request body is invalid.'), HTTPStatus.BAD_REQUEST
-        except jsonschema.exceptions.ValidationError as ex:
+        except exceptions.ValidationError as ex:
             # bad request due to JSON validation reason
             return error(ex.message), HTTPStatus.BAD_REQUEST
         except Exception as ex:
             # unknown error
             return error('Internal server error.'), HTTPStatus.INTERNAL_SERVER_ERROR
-
-        # TODO calculate the predicted price instead of squared longitude
-        price = house['longitude'] ** 2
-
-        round_price = round(price, 2)
-        return jsonify({'predicted_house_price': round_price})
 
     app.register_blueprint(bp)
 
