@@ -1,0 +1,3 @@
+graft housing-prices/static
+graft housing-prices/templates
+global-exclude *.pyc

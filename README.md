@@ -17,9 +17,24 @@ Install dependencies
 pip install -r requirements.txt
 ```
 
-## Usage
-Run the application
+Install the application package
 ```
-python housing.py
+pip install -e .
 ```
 
+
+## Usage
+Set up the env variables
+```
+export FLASK_ENV=development
+export FLASK_APP=housing-prices
+```
+
+Run the application
+```
+flask run
+```
+
+The API endpoint is now available at the http://localhost:5000/price-prediction URL.
+
+There is also Swagger documentation for the whole API on http://localhost:5000/apidocs/.

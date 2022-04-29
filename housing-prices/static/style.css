@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'TeleNeoWeb';
+    src: local('TeleNeoWeb'), url(TeleNeoWeb-Regular.woff) format('woff');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'TeleNeoWeb';
+    src: local('TeleNeoWeb'), url(TeleNeoWeb-Bold.woff) format('woff');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'TeleNeoWeb';
+    src: local('TeleNeoWeb'), url(TeleNeoWeb-ExtraBold.woff) format('woff');
+    font-weight: bold;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: #FFF;
+    margin: 1rem 1.7rem;
+    font-family: TeleNeoWeb, sans-serif;
+}
+h1 {
+    font-weight: 900;
+    font-size: 3rem;
+    padding: 0;
+    margin: 0 0 1rem 0;
+}
+
+h1, h2, h3, h4, h5, a {
+    color: #e20074;
+}
+
+p {
+    font-size: 1.2rem;
+}
