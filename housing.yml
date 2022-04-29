@@ -65,10 +65,35 @@ requestBody:
 
 responses:
   200:
-    description: Predicted price (in US dollars)
+    description: Predicted price (in US dollars).
     content:
       application/json:
         schema:
           type: object
+          properties:
+            predicted_house_price:
+              type: number
           example:
             predicted_house_price: 123.32
+  400:
+    description: Bad request. The house parameters were not specified correctly.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+          example:
+            error: "'longitude' is a required property"
+  500:
+    description: Internal server error. This occurs usually due to some unexpected reasons.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+          example:
+            error: "Internal server error."

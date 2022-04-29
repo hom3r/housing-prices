@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify
 from flasgger import Swagger, swag_from
 from jsonschema import validate
 import jsonschema
+from werkzeug import exceptions
 
 schema = {
     'type' : 'object',
@@ -78,20 +79,29 @@ def predict_price_help():
   <p>The GET method is not supported. Please use the POST request for this endpoint. See the <a href=\"/apidocs\">documentation</a> for more information.
   """, HTTPStatus.METHOD_NOT_ALLOWED
 
+def error(message):
+  """Returns error message as a JSON response."""
+  return jsonify({'error': message })
+
+
 @app.route('/predict-price', methods=['POST'])
 @swag_from('housing.yml')
 def predict_price():
     """
     Predicts house price based on its parameters.
     """
-    house = request.json
-    print(house)
-
     try:
+      house = request.json
       validate(instance=house, schema=schema)
+    except exceptions.BadRequest as ex:
+      # bad request due to invalid JSON format
+      return error('Bad request. The JSON in request body is invalid.'), HTTPStatus.BAD_REQUEST
     except jsonschema.exceptions.ValidationError as ex:
-      print(ex)
-      return jsonify({'error': ex.message }), HTTPStatus.BAD_REQUEST
+      # bad request due to JSON validation reason
+      return error(ex.message), HTTPStatus.BAD_REQUEST
+    except Exception as ex:
+      # unknown error
+      return error('Internal server error.'), HTTPStatus.INTERNAL_SERVER_ERROR
 
     # TODO calculate the predicted price instead of squared longitude
     price = house['longitude'] ** 2
