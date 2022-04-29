@@ -14,12 +14,12 @@ Then activate the environment
 
 Install dependencies
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Usage
 Run the application
 ```
-python3 housing.py
+python housing.py
 ```
 

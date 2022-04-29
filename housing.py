@@ -18,7 +18,10 @@ schema = {
         'total_rooms': { 'type': 'integer'},
         'total_bedrooms': { 'type': 'integer'},
         'median_income': { 'type': 'number'},
-        'ocean_proximity': { 'type': 'string', 'enum': ['NEAR BAY', '<1H OCEAN', 'INLAND', 'NEAR OCEAN', 'ISLAND'] }
+        'ocean_proximity': { 
+          'type': 'string', 
+          'enum': ['NEAR BAY', '<1H OCEAN', 'INLAND', 'NEAR OCEAN', 'ISLAND'] 
+        }
     },
     'required': ['longitude', 'latitude', 'housing_median_age','population','households','total_rooms','total_bedrooms','median_income','ocean_proximity']
 }
@@ -53,9 +56,31 @@ def tos():
   <p>These are the terms of using the housing prices API. Do not use for commercial purposes.</p>
   """
 
+@app.route('/')
+def home():
+  """
+  Root API route.
+  """
+  return """
+  <h1>Housing Prices API</h1>
+  <p>Welcome to the Housing prices API. Please continue to the endpoint <a href=\"/predict-price\">/predict-price</a> to for price prediction.</p>
+  <p>You can also see the documentation on <a href=\"/apidocs\">/apidocs</a>.
+  """
+
+
+@app.route('/predict-price', methods=['GET'])
+def predict_price_help():
+  """
+  The instructions you see in the browser when the endpoint is displayed using GET request.
+  """
+  return """
+  <h1>Method Not Allowed</h1>
+  <p>The GET method is not supported. Please use the POST request for this endpoint. See the <a href=\"/apidocs\">documentation</a> for more information.
+  """, HTTPStatus.METHOD_NOT_ALLOWED
+
 @app.route('/predict-price', methods=['POST'])
 @swag_from('housing.yml')
-def hello():
+def predict_price():
     """
     Predicts house price based on its parameters.
     """
