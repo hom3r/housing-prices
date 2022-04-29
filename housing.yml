@@ -1,0 +1,74 @@
+Predicts house price based on its parameters.
+---
+components:
+  schemas:
+    House:
+      title: Paraneters of the property sent as JSON
+      type: object
+      properties:
+        latitude:
+          type: number
+          description: Geological latitude
+        longitude:
+          type: number
+          description: Geological longitude
+        required:
+          - latitude
+    HouseForm:
+      title: Parameters of the property sent as form
+      properties:
+        latitude:
+          type: number
+          description: Geological latitude
+requestBody:
+  description: Parameters of the property
+  required: true
+  content:
+    application/json:
+      schema:
+        title: Paraneters of the property sent as JSON
+        type: object
+        $ref: '#/components/schemas/House'
+      examples:
+        example:
+          summary: Example house
+          value:
+            longitude: -122.23
+            latitude: 37.88
+            housing_median_age: 41
+            population: 322
+            households: 126
+            total_rooms: 880
+            total_bedrooms: 129
+            median_income: 8.3252
+            ocean_proximity: "NEAR BAY"
+        small:
+          summary: Small house
+          value:
+            latitude: 123.0
+            longitude: -42.0
+
+# requestBody:
+#   description: Request body
+#   required: true
+#   content:
+#     application/json:
+#       schema:
+#         $ref: '#/components/schemas/House'
+
+    # application/x-www-form-urlencoded:
+    #   schema:
+    #     $ref: '#/components/schemas/HouseForm'
+    # text/plain:
+    #   schema:
+    #     type: string
+
+responses:
+  200:
+    description: Predicted price (in US dollars)
+    content:
+      application/json:
+        schema:
+          type: object
+          example:
+            predicted_house_price: 123.32
