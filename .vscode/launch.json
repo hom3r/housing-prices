@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "housing.py",
+                "FLASK_APP": "housing-prices",
                 "FLASK_ENV": "development"
             },
             "args": [
