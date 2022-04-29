@@ -12,7 +12,6 @@ import numpy as np
 from flask import Flask, Blueprint, request, jsonify, render_template
 from flasgger import Swagger, swag_from
 from jsonschema import validate, exceptions
-from werkzeug import exceptions
 
 features = ['longitude', 'latitude', 'housing_median_age', 'total_rooms', 'total_bedrooms', 'population', 'households', 'median_income', 'ocean_proximity']
 schema = {
@@ -160,9 +159,11 @@ def create_app(test_config=None):
 
             # normalize data
             X = normalize(X)
-            Y = regr.predict(X)
-            
+
+            # predict the price
+            Y = regr.predict(X)            
             price = Y[0]
+
             return jsonify({'predicted_house_price': price})
         except exceptions.BadRequest as ex:
             # bad request due to invalid JSON format
