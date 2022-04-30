@@ -15,11 +15,14 @@ RUN apt-get -y install nginx \
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-# copy nginx config files
-COPY nginx.conf /etc/nginx
-
 # copy files into the container
 COPY . .
+
+# copy Docker specific files
+COPY .docker/start.sh .
+COPY .docker/uwsgi.ini .
+COPY .docker/wsgi.py .
+COPY .docker/nginx.conf /etc/nginx
 
 # install the local modules
 RUN pip install -e .
