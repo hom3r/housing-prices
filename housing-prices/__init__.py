@@ -70,12 +70,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-
-    # TODO use relative path to open the file
-    infile = open('/Users/dejv/Dev/python/housing-prices/housing-prices/model.pkl','rb')
+    dirname = os.path.dirname(__file__)
+    model_path = os.path.join(dirname, 'model.pkl')
+    infile = open(model_path,'rb')
     model = pickle.load(infile)
     infile.close()
 
+    # TODO move the code of 404, TOS etc into a separate file
     # error handling
     @app.errorhandler(404)    
     # inbuilt function which takes error as parameter
@@ -117,6 +118,7 @@ def create_app(test_config=None):
         """Returns error message as a JSON response."""
         return jsonify({'error': message })
 
+    # TODO move the prediction into a separate file
     @bp.route('/predict-price', methods=['GET'])
     def predict_price_help():
         """
