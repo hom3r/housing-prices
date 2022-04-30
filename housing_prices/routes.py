@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+from sys import stderr
 from http import HTTPStatus
 from flask import Blueprint, request, jsonify, render_template
 from jsonschema import validate, exceptions
@@ -39,6 +40,7 @@ def predict_price():
         return error(ex.message), HTTPStatus.BAD_REQUEST
     except Exception as ex:
         # unknown error
+        print(ex, file=stderr)
         return error('Internal server error.'), HTTPStatus.INTERNAL_SERVER_ERROR
 
 
@@ -53,7 +55,10 @@ def predict_prices():
         houses = request.json
         validate(instance=houses, schema=houses_schema)
 
-        prices = predictor.predict_prices(houses)
+        if prices == []:
+            prices = []
+        else:
+            prices = predictor.predict_prices(houses)
 
         return jsonify({'predicted_house_prices': prices})
     except server_exceptions.BadRequest as ex:
@@ -64,6 +69,7 @@ def predict_prices():
         return error(ex.message), HTTPStatus.BAD_REQUEST
     except Exception as ex:
         # unknown error
+        print(ex, file=stderr)
         return error('Internal server error.'), HTTPStatus.INTERNAL_SERVER_ERROR
 
 
