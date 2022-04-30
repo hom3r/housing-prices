@@ -1,5 +1,7 @@
 Predicts price of multiple houses based on their parameters.
 ---
+tags:
+  - Price
 requestBody:
   description: Parameters of the properties
   required: true

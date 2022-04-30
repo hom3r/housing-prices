@@ -7,8 +7,8 @@ from http import HTTPStatus
 from flask import Flask, render_template
 from flasgger import Swagger
 
-from .config import swagger
-from .routes import pages
+from .config import swagger, api_prefix, docs_url
+from .routes import pages, api
 
 def create_app(test_config=None):
     # create and configure the app
@@ -17,6 +17,7 @@ def create_app(test_config=None):
 
     app.config.from_mapping()
     app.register_blueprint(pages)
+    app.register_blueprint(api, url_prefix=api_prefix)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -35,9 +36,9 @@ def create_app(test_config=None):
     # error handling
     @app.errorhandler(404)
     def not_found(e):
-        content = """
+        content = F"""
         <h1>Not Found</h1>
-        <p>The requested URL was not found on the server. Please see the documentation on <a href=\"/apidocs\">/apidocs</a>.</p>
+        <p>The requested URL was not found on the server. Please see the <a href="{docs_url}">documentation</a>.</p>
         """
         return render_template("index.html", content = content), HTTPStatus.NOT_FOUND
 

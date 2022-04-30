@@ -5,16 +5,19 @@ from http import HTTPStatus
 from flask import Blueprint, request, jsonify, render_template
 from jsonschema import validate, exceptions
 from flasgger import swag_from
+from lorem import get_paragraph
 import werkzeug.exceptions as server_exceptions
 
-from .config import features, house_schema, houses_schema, model_path
+from .config import features, house_schema, houses_schema, model_path, api_prefix, docs_url
 from .predictor import Predictor
 
 pages = Blueprint('basic_pages', __name__)
+api = Blueprint('api', __name__)
+
 predictor = Predictor(model_path, features)
 
 
-@pages.route('/predict-price', methods=['POST'])
+@api.route('/predict-price', methods=['POST'])
 @swag_from('swagger/predict-price.yml')
 def predict_price():
     """
@@ -39,7 +42,7 @@ def predict_price():
         return error('Internal server error.'), HTTPStatus.INTERNAL_SERVER_ERROR
 
 
-@pages.route('/predict-prices', methods=['POST'])
+@api.route('/predict-prices', methods=['POST'])
 @swag_from('swagger/predict-prices.yml')
 def predict_prices():
     """
@@ -72,10 +75,12 @@ def tos():
     """
     Describes the terms of service.
     """
-    content = """
+    lipsum = ''.join([F'<p>{get_paragraph()}</p>' for _ in range(42)])
+    content = F"""
     <h1>Terms of Service</h1>
-
-    <p>These are the terms of using the housing prices API. Do not use for commercial purposes.</p>
+    <p>These are the terms of using the housing prices API. Do not use for commercial nor illegal purposes.</p>
+    {lipsum}
+    <p>Congratulations \U0001F389 You finished reading all of the Terms of Service, yay!</p>
     """
     return render_template('index.html', content=content)
 
@@ -85,22 +90,23 @@ def home():
     """
     Root API route.
     """
-    content = """
+    content = F"""
     <h1>Housing Prices API</h1>
-    <p>Welcome to the Housing prices API. Please continue to the endpoint <a href=\"/predict-price\">/predict-price</a> to for price prediction.</p>
-    <p>You can also see the documentation on <a href=\"/apidocs\">/apidocs</a>.
+    <p>Welcome to the Housing prices API. Please continue to the endpoint <a href="{api_prefix}/predict-price">{api_prefix}/predict-price</a> for price prediction.</p>
+    <p>You can also see the <a href="{docs_url}">documentation</a>.
+    <p>If you feel bored, you can always read the <a href="/tos">Terms of Service</a>.</p>
     """
     return render_template('index.html', content=content)
 
 
-@pages.route('/predict-price', methods=['GET'])
+@api.route('/predict-price', methods=['GET'])
 def predict_price_help():
     """
     The instructions you see in the browser when the endpoint is displayed using GET request.
     """
-    content = """
+    content = F"""
     <h1>Method Not Allowed</h1>
-    <p>The GET method is not supported. Please use the POST request for this endpoint. See the <a href=\"/apidocs\">documentation</a> for more information.
+    <p>The GET method is not supported. Please use the POST request for this endpoint. See the <a href="{docs_url}">documentation</a> for more information.
     """
     return render_template('index.html', content=content), HTTPStatus.METHOD_NOT_ALLOWED
 

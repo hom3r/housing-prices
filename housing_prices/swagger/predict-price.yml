@@ -1,5 +1,7 @@
 Predicts house price based on its parameters.
 ---
+tags:
+  - Price
 requestBody:
   description: Parameters of the property
   required: true
