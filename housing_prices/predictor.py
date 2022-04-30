@@ -22,13 +22,10 @@ class Predictor:
         self.encoder = full_model[1]
         self.features = features
 
-    def predict(self, house):
+    def __predict(self, df):
         """
-        Predict the price for a single item.
+        Calculate the predicted price values.
         """
-        # create DataFrame
-        df = pd.DataFrame(house, index=[0])
-
         # set the columns in the correct order
         df = df.reindex(columns=self.features)
 
@@ -44,7 +41,26 @@ class Predictor:
         X = normalize(X)
 
         # predict the price
-        Y = self.model.predict(X)            
+        return self.model.predict(X)
+
+    def predict_prices(self, houses):
+        """
+        Predict prices of multiple houses.
+        """
+
+        # create DataFrame
+        df = pd.DataFrame(houses)
+        Y = self.__predict(df)
+
+        return Y.tolist()
+
+    def predict_price(self, house):
+        """
+        Predict the price for a single item.
+        """
+        # create DataFrame
+        df = pd.DataFrame(house, index=[0])
+        Y = self.__predict(df)
         price = Y[0]
 
         return price

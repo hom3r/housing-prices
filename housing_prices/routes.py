@@ -5,8 +5,9 @@ from http import HTTPStatus
 from flask import Blueprint, request, jsonify, render_template
 from jsonschema import validate, exceptions
 from flasgger import swag_from
+import werkzeug.exceptions as server_exceptions
 
-from .config import features, house_schema, model_path
+from .config import features, house_schema, houses_schema, model_path
 from .predictor import Predictor
 
 pages = Blueprint('basic_pages', __name__)
@@ -14,7 +15,7 @@ predictor = Predictor(model_path, features)
 
 
 @pages.route('/predict-price', methods=['POST'])
-@swag_from('housing.yml')
+@swag_from('swagger/predict-price.yml')
 def predict_price():
     """
     Predicts house price based on its parameters.
@@ -24,10 +25,10 @@ def predict_price():
         house = request.json
         validate(instance=house, schema=house_schema)
 
-        price = predictor.predict(house)
+        price = predictor.predict_price(house)
 
         return jsonify({'predicted_house_price': price})
-    except exceptions.BadRequest as ex:
+    except server_exceptions.BadRequest as ex:
         # bad request due to invalid JSON format
         return error('Bad request. The JSON in request body is invalid.'), HTTPStatus.BAD_REQUEST
     except exceptions.ValidationError as ex:
@@ -37,6 +38,34 @@ def predict_price():
         # unknown error
         return error('Internal server error.'), HTTPStatus.INTERNAL_SERVER_ERROR
 
+
+@pages.route('/predict-prices', methods=['POST'])
+@swag_from('swagger/predict-prices.yml')
+def predict_prices():
+    """
+    Predicts prices of multiple houses based on their parameters.
+    """
+    try:
+        # get the house parameters and validate them
+        houses = request.json
+        validate(instance=houses, schema=houses_schema)
+
+        prices = predictor.predict_prices(houses)
+
+        return jsonify({'predicted_house_prices': prices})
+    except server_exceptions.BadRequest as ex:
+        # bad request due to invalid JSON format
+        return error('Bad request. The JSON in request body is invalid.'), HTTPStatus.BAD_REQUEST
+    except exceptions.ValidationError as ex:
+        # bad request due to JSON validation reason
+        return error(ex.message), HTTPStatus.BAD_REQUEST
+    except Exception as ex:
+        # unknown error
+        return error('Internal server error.'), HTTPStatus.INTERNAL_SERVER_ERROR
+
+
+###############################################
+# some support routes below
 
 @pages.route('/tos')
 def tos():

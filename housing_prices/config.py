@@ -21,6 +21,11 @@ house_schema = {
     'required': features
 }
 
+houses_schema = {
+    'type': 'array',
+    'items': house_schema
+}
+
 swagger = {
     'title': 'Housing Prices API',
     'description': 'This API predicts the housing prices based on the property parameters.',
@@ -32,5 +37,5 @@ swagger = {
         'schemas': {
             'House': house_schema
         }
-    }
+    },
 }

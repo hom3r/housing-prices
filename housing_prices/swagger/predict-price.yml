@@ -1,32 +1,12 @@
 Predicts house price based on its parameters.
 ---
-components:
-  schemas:
-    House:
-      title: Paraneters of the property sent as JSON
-      type: object
-      properties:
-        latitude:
-          type: number
-          description: Geological latitude
-        longitude:
-          type: number
-          description: Geological longitude
-        required:
-          - latitude
-    HouseForm:
-      title: Parameters of the property sent as form
-      properties:
-        latitude:
-          type: number
-          description: Geological latitude
 requestBody:
   description: Parameters of the property
   required: true
   content:
     application/json:
       schema:
-        title: Paraneters of the property sent as JSON
+        title: House
         type: object
         $ref: '#/components/schemas/House'
       examples:
