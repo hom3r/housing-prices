@@ -32,7 +32,7 @@ tar -zxvf housing_prices/model.tgz
 Set up the env variables
 ```
 export FLASK_ENV=development
-export FLASK_APP=housing-prices
+export FLASK_APP=housing_prices
 ```
 
 Run the application
