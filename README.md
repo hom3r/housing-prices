@@ -24,7 +24,7 @@ pip install -e .
 
 Unzip the pickled model file
 ```
-tar -zxvf housing_prices/model.tgz
+tar -zxvf data/model.tgz
 ```
 
 
@@ -40,9 +40,11 @@ Run the application
 flask run
 ```
 
-The API endpoint is now available at the http://localhost:5000/price-prediction URL.
+Application now runs on http://localhost:5000/.
 
-There is also Swagger documentation for the whole API on http://localhost:5000/apidocs/.
+The API endpoint is now available at the http://localhost:5000/v1/predict-price URL. Note that you have to use POST request with the valid JSON payload.
+
+There is also Swagger documentation with executable examples for the whole API on http://localhost:5000/v1/apidocs/.
 
 ## Docker
 To run app in Docker, use the docker-compose tool.
