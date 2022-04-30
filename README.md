@@ -24,7 +24,7 @@ pip install -e .
 
 Unzip the pickled model file
 ```
-tar -zxvf housing-prices/model.tgz
+tar -zxvf housing_prices/model.tgz
 ```
 
 

@@ -1,12 +1,14 @@
 # Files not needed in the container
-.vscode
 .DS_Store
 .dockerignore
+.docker/
 .git
 .gitignore
+.vscode/
 
 Dockerfile
 docker-compose.yml
+model.pkl
 
 
 # --------------------------------------
