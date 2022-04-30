@@ -43,3 +43,9 @@ flask run
 The API endpoint is now available at the http://localhost:5000/price-prediction URL.
 
 There is also Swagger documentation for the whole API on http://localhost:5000/apidocs/.
+
+## Docker
+To run app in Docker, use the docker-compose tool.
+```
+docker-compose up
+```

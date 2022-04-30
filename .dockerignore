@@ -1,5 +1,12 @@
-# Files not pushed to repo
-model.pkl
+# Files not needed in the container
+.vscode
+.DS_Store
+.dockerignore
+.git
+.gitignore
+
+Dockerfile
+docker-compose.yml
 
 
 # --------------------------------------

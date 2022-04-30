@@ -87,7 +87,6 @@ def create_app(test_config=None):
         """
         return render_template("index.html", content = content), HTTPStatus.NOT_FOUND
 
-    
     bp = Blueprint('housing-prices', __name__)
 
     @bp.route('/tos')
