@@ -28,7 +28,7 @@ COPY .docker/nginx.conf /etc/nginx
 RUN pip install -e .
 
 # unpack the prediction model
-RUN tar -zxvf data/model.tgz --directory data
+ADD data/model.tgz data/
 
 # set start script to be executable
 RUN chmod +x ./start.sh

@@ -7,8 +7,6 @@
 
 Dockerfile
 docker-compose.yml
-model.pkl
-
 
 # --------------------------------------
 # Python specific ignore rules
