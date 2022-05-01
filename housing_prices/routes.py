@@ -9,13 +9,17 @@ from flasgger import swag_from
 from lorem import get_paragraph
 import werkzeug.exceptions as server_exceptions
 
-from .config import features, house_schema, houses_schema, model_path, api_prefix, docs_url
+from .config import config, house_schema, houses_schema, features
 from .predictor import Predictor
 
 pages = Blueprint('basic_pages', __name__)
 api = Blueprint('api', __name__)
 
-predictor = Predictor(model_path, features)
+api_prefix = config['api_prefix']
+docs_url = config['docs_url']
+batch_limit =config['batch_limit']
+
+predictor = Predictor(config['model_path'], features)
 
 
 @api.route('/predict-price', methods=['POST'])
@@ -51,16 +55,23 @@ def predict_prices():
     Predicts prices of multiple houses based on their parameters.
     """
     try:
-        # get the house parameters and validate them
+        # get the house parameters
         houses = request.json
+
+        if len(houses) > batch_limit:
+            return error(F'The array of houses is too big. Max size of the batch is {batch_limit} items per request.'), HTTPStatus.BAD_REQUEST
+        
+        # validate the data
         validate(instance=houses, schema=houses_schema)
 
         if houses == []:
+            # empty input array produces empty output array
             prices = []
         else:
             prices = predictor.predict_prices(houses)
 
         return jsonify({'predicted_house_prices': prices})
+
     except server_exceptions.BadRequest as ex:
         # bad request due to invalid JSON format
         return error('Bad request. The JSON in request body is invalid.'), HTTPStatus.BAD_REQUEST

@@ -1,7 +1,3 @@
-model_path = 'data/model.pkl'
-api_prefix = '/v1'
-docs_url = '%s/apidocs' % api_prefix
-
 features = ['longitude', 'latitude', 'housing_median_age', 'total_rooms', 'total_bedrooms', 'population', 'households', 'median_income', 'ocean_proximity']
 
 house_schema = {
@@ -28,24 +24,32 @@ houses_schema = {
     'items': house_schema
 }
 
-swagger = {
-    'title': 'Housing Prices API',
-    'description': 'This API predicts the housing prices based on the property parameters.',
-    'uiversion': 3,
-    'openapi': '3.0.3',
-    'version': '1.0.0',
-    'persistAuthorization': True,
-    'url_prefix': '/v1',
-    'specs_route': '/apidocs/',
-    'components': {
-        'schemas': {
-            'House': house_schema
-        }
-    },
-    'specs': [
-        {
-            'endpoint': '/v1',
-            'route': '/swagger.json',
-        }
-    ],
+config = {
+    'model_path': 'data/model.pkl',
+    'api_prefix': '/v1',
+    'batch_limit': 1000,
+    'docs_url': '/v1/apidocs',
+
+    'swagger': {
+        'title': 'Housing Prices API',
+        'description': 'This API predicts the housing prices based on the property parameters.',
+        'uiversion': 3,
+        'openapi': '3.0.3',
+        'version': '1.0.0',
+        'persistAuthorization': True,
+        'url_prefix': '/v1',
+        'specs_route': '/apidocs/',
+        'components': {
+            'schemas': {
+                'House': house_schema
+            }
+        },
+        'specs': [
+            {
+                'endpoint': '/v1',
+                'route': '/swagger.json',
+            }
+        ],
+    }
 }
+
