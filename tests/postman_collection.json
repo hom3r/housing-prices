@@ -1,0 +1,508 @@
+{
+	"info": {
+		"_postman_id": "5308e16c-a9a7-46cd-a573-610863d92e01",
+		"name": "House Pricing API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Errors",
+			"item": [
+				{
+					"name": "Invalid JSON",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400\", function () {",
+									"    pm.response.to.be.badRequest;",
+									"});",
+									"",
+									"pm.test(\"Response must have a body with error\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.jsonBody(\"error\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    nonsense\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/v1/predict-price",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"predict-price"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty request body",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400\", function () {",
+									"    pm.response.to.be.badRequest;",
+									"});",
+									"",
+									"pm.test(\"Response must have a body with error\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.jsonBody(\"error\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/v1/predict-price",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"predict-price"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400\", function () {",
+									"    pm.response.to.be.badRequest;",
+									"});",
+									"",
+									"pm.test(\"Response must have a body with error\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.jsonBody(\"error\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"latitude\": 55.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/v1/predict-price",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"predict-price"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batch: Too big array",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400\", function () {",
+									"    pm.response.to.be.badRequest;",
+									"});",
+									"",
+									"pm.test(\"Response have a body with error field\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.jsonBody(\"error\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {},\n    {}\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/v1/predict-prices",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"predict-prices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batch: Invalid JSON",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400\", function () {",
+									"    pm.response.to.be.badRequest;",
+									"});",
+									"",
+									"pm.test(\"Response have a body with error field\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.jsonBody(\"error\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    nonsense\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/v1/predict-prices",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"predict-prices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batch: Invalid schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400\", function () {",
+									"    pm.response.to.be.badRequest;",
+									"});",
+									"",
+									"pm.test(\"Response have a body with error field\", function () {",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"    pm.response.to.have.jsonBody(\"error\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"longitude\": -115.73,\n        \"latitude\": 33.35,\n        \"housing_median_age\": 23,\n        \"total_rooms\": 1586,\n        \"total_bedrooms\": 448,\n        \"population\": 338,\n        \"households\": 182,\n        \"median_income\": 1.2132,\n        \"ocean_proximity\": \"INLAND\"\n    },\n    {\n        \"latitude\": 38.0100\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/v1/predict-prices",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"predict-prices"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TestSet[0] price",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code should be 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response must have a body without error\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"pm.test(\"Response must contain the correct price\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data.predicted_house_price).to.eql(312116.03);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"latitude\": 38.0100,\n    \"longitude\": -122.64,\n    \"housing_median_age\": 36.0,\n    \"total_rooms\": 1336,\n    \"total_bedrooms\": 258,\n    \"population\": 678,\n    \"households\": 249,\n    \"median_income\": 5.5789,\n    \"ocean_proximity\": \"NEAR OCEAN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/v1/predict-price",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"predict-price"
+					]
+				},
+				"description": "test_set[0]\nshould return 312116.03"
+			},
+			"response": []
+		},
+		{
+			"name": "TestSet[1] price",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code should be 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Response must have a body without error\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"pm.test(\"Response must contain the correct price\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data.predicted_house_price).to.eql(73735);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"longitude\": -115.73,\n    \"latitude\": 33.35,\n    \"housing_median_age\": 23,\n    \"total_rooms\": 1586,\n    \"total_bedrooms\": 448,\n    \"population\": 338,\n    \"households\": 182,\n    \"median_income\": 1.2132,\n    \"ocean_proximity\": \"INLAND\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/v1/predict-price",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"predict-price"
+					]
+				},
+				"description": "test_set[1]\nShould return 73735.0"
+			},
+			"response": []
+		},
+		{
+			"name": "Predict array of prices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code should be 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Response must have a body without error\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"pm.test(\"Response must contain the correct price\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data.predicted_house_prices).to.eql([73735, 312116.03]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"longitude\": -115.73,\n        \"latitude\": 33.35,\n        \"housing_median_age\": 23,\n        \"total_rooms\": 1586,\n        \"total_bedrooms\": 448,\n        \"population\": 338,\n        \"households\": 182,\n        \"median_income\": 1.2132,\n        \"ocean_proximity\": \"INLAND\"\n    },\n    {\n        \"latitude\": 38.0100,\n        \"longitude\": -122.64,\n        \"housing_median_age\": 36.0,\n        \"total_rooms\": 1336,\n        \"total_bedrooms\": 258,\n        \"population\": 678,\n        \"households\": 249,\n        \"median_income\": 5.5789,\n        \"ocean_proximity\": \"NEAR OCEAN\"\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/v1/predict-prices",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"predict-prices"
+					]
+				},
+				"description": "Should return\n```\n{\n    \"predicted_house_prices\": [73735.0, 312116.03]\n}\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "Predict empty array of prices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code must be 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Response must have a body without error\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"pm.test(\"Response must contain the correct price\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data.predicted_house_prices).to.eql([]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/v1/predict-prices",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"v1",
+						"predict-prices"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

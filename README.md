@@ -4,13 +4,32 @@ This API provides a prediction model, which estimates the price of a property gi
 
 Please read below to see how to run the application either using Docker (production) or Flask (development). 
 
-In both cases the app will by default run on http://localhost:5000/.
+## TL;DR
+Run the application using `docker-compose up` and see the application on http://localhost:5000/.
 
 The price prediction API endpoint is available at the http://localhost:5000/v1/predict-price URL. Note that you have to use POST request with the valid JSON payload.
 
-## API Documentation
+You can test the endpoint using the following curl command
+```bash
+curl --location --request POST 'localhost:5000/v1/predict-price' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "latitude": 38.0100,
+    "longitude": -122.64,
+    "housing_median_age": 36.0,
+    "total_rooms": 1336,
+    "total_bedrooms": 258,
+    "population": 678,
+    "households": 249,
+    "median_income": 5.5789,
+    "ocean_proximity": "NEAR OCEAN"
+}'
+```
 
-See the Swagger documentation with executable examples for the whole API on http://localhost:5000/v1/apidocs/.
+You should get the following response
+```json
+{"predicted_house_price": 312116.03}
+```
 
 
 ## Production
@@ -30,7 +49,7 @@ To change the port (default is 5000), edit the `docker-compose.yml` file.
 # ...
 ```
 
-The application is deployment ready. It is served using uWSGI and nginx for best production performance. If you need to tweak the production parameters like number of processes (4 by default) etc, edit the `.docker/uwsgi.ini` file (at your own risk). 
+The application is deployment ready. It is served using uWSGI and nginx for best production performance. If you need to tweak the production parameters like number of processes (4 by default) edit the `.docker/uwsgi.ini` file (at your own risk). 
 
 
 ## Development
@@ -62,7 +81,6 @@ Unzip the pickled model file
 tar -zxvf data/model.tgz
 ```
 
-
 ### Usage
 Set up the env variables
 ```
@@ -77,3 +95,11 @@ flask run
 
 Application should now run on http://localhost:5000/.
 
+
+## API Documentation
+
+See the Swagger documentation with executable examples for the whole API on http://localhost:5000/v1/apidocs/.
+
+
+## Testing
+There is a suite of tests stored as a Postman Collection in the `tests/postman_collection.json` file. Import it into Postman and hit Run collection to see the results.
